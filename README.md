@@ -20,3 +20,5 @@ wait和notify有什么作用？
 
 # 相关链接
 - 在线查看JDK源码：https://hg.openjdk.org/jdk8/jdk8/hotspot/file
+- 代码随想录：https://programmercarl.com/
+- 并发编程知识总结：https://github.com/CL0610/Java-concurrency
