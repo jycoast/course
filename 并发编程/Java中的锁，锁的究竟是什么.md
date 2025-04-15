@@ -1032,7 +1032,7 @@ synchronized 与Lock 最本质的区别：
 - synchronized 由JVM实现了MESA模型，Lock 通过Java代码实现了MESA模型
 - synchronized 会调用 `syscall` 进入内核等待，Lock不会
 
-# 思考
+# 思考题
 
 1. 线程的虚假唤醒是什么意思？如何避免虚假唤醒
 2. ObjectMonitor 中的ObjectWaiter 其实有两种，分别是_WaitSet 和 _EntryList，它有什么区别和联系？
