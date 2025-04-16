@@ -2,15 +2,11 @@
 
 Java中的锁，锁的究竟是什么？
 
-你有多少种方式来保障线程安全？
+并发编程中的设计模式-阻塞唤醒机制
 
-wait和notify有什么作用？
-
-条件等待队列到底是什么？
+Java中如何保障线程安全？
 
 深入理解Java中的线程
-
-可见性、原子性和有序性问题
 
 如何基于AQS实现一个自定义的锁？
 
@@ -18,7 +14,19 @@ wait和notify有什么作用？
 
 # 算法
 
+算法导论
+
+数组
+
+链表
+
+栈与队列
+
+树
+
 # 相关链接
 - 在线查看JDK源码：https://hg.openjdk.org/jdk8/jdk8/hotspot/file
-- 代码随想录：https://programmercarl.com/
 - 并发编程知识总结：https://github.com/CL0610/Java-concurrency
+- 代码随想录：https://programmercarl.com/
+- Hello 算法：https://www.hello-algo.com/chapter_hello_algo/
+- 排序算法：https://www.runoob.com/w3cnote/ten-sorting-algorithm.html
