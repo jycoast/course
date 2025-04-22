@@ -526,8 +526,6 @@ public class SingleDcl {
 
 <img src="https://blog-1304855543.cos.ap-guangzhou.myqcloud.com/blog/image-20250422113805462.png" alt="image-20250422113805462" style="zoom:67%;" />
 
-
-
 ## final关键字
 
 final 修饰变量时，初衷是告诉编译器：这个变量生而不变。
@@ -663,4 +661,9 @@ http://ifeve.com/wp-content/uploads/2014/03/JSR133%E4%B8%AD%E6%96%87%E7%89%88.pd
 
 # 思考题
 
-为什么在 32 位的机器上对 long 型变量进行加减操作存在并发隐患？
+1.为什么在 32 位的机器上对 long 型变量进行加减操作存在并发隐患？
+
+2.final关键字没有使用内存屏障是如何保证可见性的？
+
+参考：https://github.com/CL0610/Java-concurrency/blob/master/06.%E4%BD%A0%E4%BB%A5%E4%B8%BA%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3final%E5%90%97%EF%BC%9F/java%E5%85%B3%E9%94%AE%E5%AD%97--final.md
+
