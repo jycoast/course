@@ -178,7 +178,7 @@ d = e - f ;
 
 这只是 JMM 存在的其中一个原因。实际上，对于 Java 来说，你可以把 JMM 看作是 Java 定义的并发编程相关的一组规范（[JSR133](http://ifeve.com/wp-content/uploads/2014/03/JSR133%E4%B8%AD%E6%96%87%E7%89%88.pdf)），除了抽象了线程和主内存之间的关系之外，其还规定了从 Java 源代码到 CPU 可执行指令的这个转化过程要遵守哪些和并发相关的原则和规范，其主要目的是为了简化多线程编程，增强程序可移植性的。
 
-Java线程之间的通信由Java内存模型（简称JMM）控制，从抽象的角度来说，JMM定义了线程和主内存之间的抽象关系。JMM的抽象示意图如图所示：
+Java线程之间的通信由Java内存模型（简称JMM）控制，从抽象的角度来说，JMM定义了线程和主内存之间的抽象关系。JMM的抽象示意图如图所示：	
 
 <img src="https://blog-1304855543.cos.ap-guangzhou.myqcloud.com/blog/image-20250421233422584.png" alt="image-20250421233422584" style="zoom:50%;" />
 
@@ -210,23 +210,17 @@ Java 内存模型规范了 JVM 如何提供按需禁用缓存和编译优化的�
 **为什么这么设计？**
 
 1. 减少CPU等待时间
-2. 空间局部性原理、时间局部性
+2. 空间局部性原理、时间局部性原理
 
 **别的编程语言也有内存模型吗？**
 
-只要支持并发的现代编程语言都有类似的概念。
+只要支持并发的现代编程语言都有类似的概念，但是不一定是共享内存模型。
 
 # 按需禁用缓存和编译优化
 
 ## happen before
 
 Happens-Before 的含义：**前面一个操作的结果对后续操作是可见的**。
-
-Happens-Before 的作用：用于程序员判断程序是否有线程安全问题，另外Happens-Before 约束了编译器的优化行为，虽允许编译器优化，但是要求编译器优化后一定遵守 Happens-Before 规则。
-
-Happens-Before 的语义是一种因果关系。在现实世界里，如果 A 事件是导致 B 事件的起因，那么 A 事件一定是先于（Happens-Before）B 事件发生的，这个就是 Happens-Before 语义的现实理解。
-
-在 Java 语言里面，Happens-Before 的语义本质上是一种可见性，A Happens-Before B 意味着 A 事件对 B 事件来说是可见的，无论 A 事件和 B 事件是否发生在同一个线程里。例如 A 事件发生在线程 1 上，B 事件发生在线程 2 上，Happens-Before 规则保证线程 2 上也能看到 A 事件的发生。
 
 happens-before的内容：
 
@@ -236,6 +230,12 @@ happens-before的内容：
 - 管程中锁的规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。
 - start规则：如果线程A执行操作ThreadB.start()启动线程B，那么A线程的ThreadB.start（）操作happens-before于线程B中的任意操作
 - join规则：如果线程A执行操作ThreadB.join（）并成功返回，那么线程B中的任意操作happens-before于线程A从ThreadB.join()操作成功返回。
+
+Happens-Before 的作用：用于程序员判断程序是否有线程安全问题，另外Happens-Before 约束了编译器的优化行为，虽允许编译器优化，但是要求编译器优化后一定遵守 Happens-Before 规则。
+
+Happens-Before 的语义是一种因果关系。在现实世界里，如果 A 事件是导致 B 事件的起因，那么 A 事件一定是先于（Happens-Before）B 事件发生的，这个就是 Happens-Before 语义的现实理解。
+
+在 Java 语言里面，Happens-Before 的语义本质上是一种可见性，A Happens-Before B 意味着 A 事件对 B 事件来说是可见的，无论 A 事件和 B 事件是否发生在同一个线程里。例如 A 事件发生在线程 1 上，B 事件发生在线程 2 上，Happens-Before 规则保证线程 2 上也能看到 A 事件的发生。
 
 ### 1. 程序的顺序性规则
 
@@ -547,7 +547,7 @@ final 字段的可见性由 JMM 的初始化安全性保证，效果类似于内
 
 由于x86只有store load可能会重排序，所以只有JSR的StoreLoad屏障对应它的mfence或lock前缀指令，其他屏障对应空操作。
 
-**硬件层内存屏障**
+## **硬件层内存屏障**
 
 硬件层提供了一系列的内存屏障 memory barrier / memory fence(Intel的提法)来提供一致性的能力。拿X86平台来说，有几种主要的内存屏障：
 
@@ -634,8 +634,8 @@ Java内存模型与硬件内存架构之间存在差异。硬件内存架构没�
 
 **如何保证有序性**
 
-- 通过 volatile 关键字保证可见性。
-- 通过 内存屏障保证可见性。
+- 通过 volatile 关键字保证有序性。
+- 通过 内存屏障保证有序性。
 - 通过 synchronized关键字保证有序性。
 - 通过 Lock保证有序性。
 
@@ -663,7 +663,9 @@ http://ifeve.com/wp-content/uploads/2014/03/JSR133%E4%B8%AD%E6%96%87%E7%89%88.pd
 
 1.为什么在 32 位的机器上对 long 型变量进行加减操作存在并发隐患？
 
-2.final关键字没有使用内存屏障是如何保证可见性的？
+2.final关键字是如何保证可见性的？
 
 参考：https://github.com/CL0610/Java-concurrency/blob/master/06.%E4%BD%A0%E4%BB%A5%E4%B8%BA%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3final%E5%90%97%EF%BC%9F/java%E5%85%B3%E9%94%AE%E5%AD%97--final.md
+
+3.什么是空间局部性原理、时间局部性原理？
 
